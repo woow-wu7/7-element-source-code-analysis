@@ -4,17 +4,18 @@
   -ms-user-select: $value;
 }
 
+// 清除浮动
 @mixin utils-clearfix {
   $selector: &;
 
-  @at-root {
+  @at-root { // @at-root 提升层级，表示和el-row等同一个层级，而不是子级
     #{$selector}::before,
     #{$selector}::after {
-      display: table;
-      content: "";
+      display: table; // display：block；也可以
+      content: ""; // 不占大小
     }
     #{$selector}::after {
-      clear: both
+      clear: both // 清除浮动
     }
   }
 }

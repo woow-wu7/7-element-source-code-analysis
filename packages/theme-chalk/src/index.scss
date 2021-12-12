@@ -1,3 +1,5 @@
+// 引入整个elemnt时，引入样式是使用的
+// import 'element-ui/lib/theme-chalk/index.css';
 @import "./base.scss";
 @import "./pagination.scss";
 @import "./dialog.scss";
@@ -41,7 +43,7 @@
 @import "./notification.scss";
 @import "./slider.scss";
 @import "./loading.scss";
-@import "./row.scss";
+@import "./row.scss"; // row.scss
 @import "./col.scss";
 @import "./upload.scss";
 @import "./progress.scss";

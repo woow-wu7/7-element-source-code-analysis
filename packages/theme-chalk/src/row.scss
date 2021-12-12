@@ -2,11 +2,66 @@
 @import "mixins/mixins";
 @import "mixins/utils";
 
+  // BEM
+
+  // 1
+  // b
+  // @mixin b($block) {
+  //   $B: $namespace+'-'+$block !global;
+  //   .#{$B} { // el-row
+  //     @content;
+  //   }
+  // }
+
+  // 2
+  // @mixin utils-clearfix
+  // 清除浮动
+  // @mixin utils-clearfix {
+  //   $selector: &;
+  //   @at-root {
+  //     #{$selector}::before,
+  //     #{$selector}::after {
+  //       display: table;
+  //       content: ""; // 不占大小
+  //     }
+  //     #{$selector}::after {
+  //       clear: both // 清除浮动
+  //     }
+  //   }
+  // }
+
+  // 3
+  // @mixin m($modifier) {
+  //   $selector: &;
+  //   $currentSelector: "";
+  //   @each $unit in $modifier {
+  //     $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
+  //   }
+  //   @at-root {
+  //     #{$currentSelector} {
+  //       @content;
+  //     }
+  //   }
+  // }
+
+  // 4
+  // @mixin when($state) {
+  //   @at-root {
+  //     &.#{$state-prefix + $state} { // is + $state
+  //       @content;
+  //     }
+  //   }
+  // }
+
+
 @include b(row) {
   position: relative;
   box-sizing: border-box;
-  @include utils-clearfix;
+  @include utils-clearfix; // 清除浮动
 
+  // m
+  // 这里m的最终效果就是
+  // .el-row--flex: { display: flex; ...以及具体的 @when 中的布局方式 }
   @include m(flex) {
     display: flex;
     &:before,
@@ -14,9 +69,11 @@
       display: none;
     }
 
+    // .el-row--flex .is-justify-center: {  justify-content: center; }
     @include when(justify-center) {
       justify-content: center;
     }
+
     @include when(justify-end) {
       justify-content: flex-end;
     }

@@ -80,8 +80,21 @@
   $B: $namespace+'-'+$block !global;
 
   .#{$B} {
+    // 这里其实就是引用了 $B 变量做为class名 ---> el-$block
+    // 比如 el-row -----> .#{$B} -> .el-row
     @content;
   }
+  // $B
+  // 1. 这里的 $namespace = el
+  // 2. $block 是参数，表示BEM中的block
+
+  // !global
+  // - 表示变量提升，将局部变量提升为全局变量，在其他函数体内也能访问到此变量
+
+  // @content 是 @include 花括号中的值
+
+  // #{$B} 是插值语句
+  // - 插值语句可以在 选择器 或者 属性名 中使用 变量
 }
 
 @mixin e($element) {
@@ -110,12 +123,25 @@
 }
 
 @mixin m($modifier) {
-  $selector: &;
+  $selector: &; // 这里变量没有使用到 ？
   $currentSelector: "";
   @each $unit in $modifier {
     $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
   }
+  // $modifier-separator: '--';
+  // $namespace: 'el';
+  // $element-separator: '__';
+  // $state-prefix: 'is-';
+  // & 指代父元素 .el-row
+  // &--flex ------> .el-row--flex
 
+  // $currentSelector变量的初始值 ‘’ -> 会在循环中被覆盖掉
+  // - 例如
+  //  - $currentSelector: "";
+  //  - $currentSelector: .el-row-flex
+
+  // @at-root
+  // - 表示提升到父元素的同一层级
   @at-root {
     #{$currentSelector} {
       @content;
@@ -171,13 +197,26 @@
   }
 }
 
+
 @mixin when($state) {
   @at-root {
     &.#{$state-prefix + $state} {
       @content;
     }
   }
+  // 1
+  // $state-prefix: 'is-';
+  // 2
+  // $state的值是枚举：
+  // -> justify-center | justify-end | justify-space-between | justify-space-around
+  // -> align-top | align-middle | align-bottom
+  // 3
+  // & -> 在b是el-row时表示的是 .el-row--flex
+  // 4
+  // 举例
+  // .el-row--flex .is-justify-center: {  justify-content: center; }
 }
+
 
 @mixin extend-rule($name) {
   @extend #{'%shared-'+$name};

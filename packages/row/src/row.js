@@ -39,7 +39,7 @@ export default {
       const ret = {};
 
       if (this.gutter) {
-        ret.marginLeft = `-${this.gutter / 2}px`;
+        ret.marginLeft = `-${this.gutter / 2}px`; // gutter 变化时从新计算 style
         ret.marginRight = ret.marginLeft; // marginLeft 和 marginRight 值相等
       }
 
@@ -50,6 +50,7 @@ export default {
   // 1
   // render()
   // - render函数签名：(createElement: () => VNode) => VNode
+
   // 2
   // createElement()
   // 1. 返回值
@@ -72,9 +73,22 @@ export default {
   // - 参数注意点
   //  - 第二个和点三个参数是可选的
   //  - 当只有两个参数时，第二个参数会被当作第三个参数来处理
+
   // 3
   // row 相关的sass文件在 packages/theme-chalk/src/row.scss 文件中
   // - chalk 是粉笔的意思
+
+  // 4
+  // 问题：这里为什么要用render，而不用template？
+  // 回答：因为 el-row 可以自定义标签的名称，如果使用template要很多if...else很冗余和麻烦
+
+  // 5
+  // el-row 中一共加了下面几个class
+  // - .el-row
+  // - .is-justify-
+  // - .is-align-
+  // - .el-row-flex 在type=== 'flex' 时存在
+
   render(h) {
     return h(this.tag, { // 第一个参数：this.tag 是传入组件的tag属性，表示自定义该组件的元素标签
       class: [ // 第二个参数：组件的attribute属性，就是传入组件的所有属性

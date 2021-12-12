@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .root {
+      }
+      .left {
+        width: 200px;
+        height: 100px;
+        background: red;
+        float: left;
+      }
+      .center {
+        width: 200px;
+        height: 100px;
+        background: blue;
+        /* float: left; */
+        clear: both;
+        /* 1. 元素浮动后，周围的元素会从新排列，浮动元素之前的元素不会受到影响，浮动元素之后的元素将围绕它 */
+        /* 2. 清除浮动使用clear，用来指定 ( 该元素两侧不能出现浮动元素 ) */
+      }
+      .right {
+        width: 200px;
+        height: 100px;
+        background: yellow;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="root">
+      <div class="left">left</div>
+      <div class="center">center</div>
+      <div class="right">right</div>
+    </div>
+  </body>
+</html>
