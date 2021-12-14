@@ -69,7 +69,10 @@
       display: none;
     }
 
+    // when
     // .el-row--flex .is-justify-center: {  justify-content: center; }
+    // 其实上面之间是没有空格的，像下面这样
+    // .el-row--flex.is-justify-center: {  justify-content: center; }
     @include when(justify-center) {
       justify-content: center;
     }

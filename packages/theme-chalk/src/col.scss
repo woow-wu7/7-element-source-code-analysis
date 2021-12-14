@@ -1,36 +1,60 @@
 @use "sass:math";
+// @use "sass:math";
+// - 当前只有Dart Sass支持使用 @use 加载内置模块。其他实现的用户必须改为使用其全局名称来调用函数
+// - 通过 @use "sass:math" 后就能使用 math 函数了
+
+// 1
+// math.div($number1, $number2)
+// - 返回 $number1 除以 $number2 的结果
+
+// 2
+// @for
+// 格式为 `@for <variable> from <expression> to <expression> { ... }` ------ 不包含最后一个
+// 或者为 `@for <variable> from <expression> through <expression> { ... }` - 包含最后一个
+// 作用：从一个数字向上或者向下计数到另一个数字
+// 区别：to不包含最后的数字，through包含最后的数字
+
 @import "./common/var.scss";
 @import "./mixins/mixins.scss";
 
+// css属性选择器
+// [class*="el-col-"] 表示选择class值中 ( 包含了 el-col- 的选择器 )
 [class*="el-col-"] {
   float: left;
   box-sizing: border-box;
 }
 
+// 单独处理 .el-col-0
 .el-col-0 {
   display: none;
 }
 
-@for $i from 0 through 24 {
+@for $i from 0 through 24 { // 遍历并且包含24，to则不包含24
+  // span 栅格占据的列数
   .el-col-#{$i} {
     width: (math.div(1 , 24) * $i * 100) * 1%;
+    // 宽度百分比
   }
 
+  // offset 栅格左侧的间隔格数
   .el-col-offset-#{$i} {
     margin-left: (math.div(1 , 24) * $i * 100) * 1%;
   }
 
+  // pull 向左侧移动的格数
   .el-col-pull-#{$i} {
     position: relative;
     right: (math.div(1 , 24) * $i * 100) * 1%;
   }
 
+  // push 向右侧移动格数
   .el-col-push-#{$i} {
     position: relative;
     left: (math.div(1 , 24) * $i * 100) * 1%;
   }
 }
 
+// xs
 @include res(xs) {
   .el-col-xs-0 {
     display: none;
