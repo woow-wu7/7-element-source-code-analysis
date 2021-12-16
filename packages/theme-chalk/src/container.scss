@@ -1,5 +1,13 @@
 @import "mixins/mixins";
 
+// b
+// 就是添加了这样一个class
+// - .#{$namespace+'-'+$block}
+// - .el-container { display: flex, ...}
+
+// when
+// - &.#{$state-prefix + $state}
+// - .el-container.is-vertical { flex-direction: column; }
 @include b(container) {
   display: flex;
   flex-direction: row;

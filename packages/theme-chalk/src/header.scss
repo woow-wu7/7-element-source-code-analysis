@@ -1,8 +1,14 @@
 @import "mixins/mixins";
 @import "common/var";
 
+
+
+/* Header
+  --------------------------*/
+// $--header-padding: 0 20px !default;
+// .el-heder
 @include b(header) {
   padding: $--header-padding;
   box-sizing: border-box;
-  flex-shrink: 0;
+  flex-shrink: 0; // 存在剩余空间，不缩小
 }

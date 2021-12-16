@@ -5,29 +5,91 @@
 </template>
 
 <script>
-  export default {
-    name: 'ElContainer',
+// Container
+// - 用于布局的容器组件，便于搭建页面的基本结构
+// 1
+// <el-container> 外层容器
+// a排列方式
+//  - 在不设置属性 direction 时
+//    - 垂直排列：当 ( <el-container>  ) 子元素中包含 ( <el-header> 或 <el-footer> ) 时，全部子元素会垂直上下排列
+//    - 水平排列：当子元素中不包含<el-header>或<el-footer>时水平排列
+//  - 在设置了 direction 时，按设置的值进行排列，direction的值只能是 ( horizontal 或 vertical )
+// b思考
+//  - 问题：为什么要有水平和垂直排列的区别呢？
+//  - 回答：因为要实现多不同的布局的组合方式
+// c是否支持嵌套
+//  - <el-container> 是可以嵌套 <el-container> 的
 
-    componentName: 'ElContainer',
+// 2
+// <el-header>：顶栏容器
+// <el-aside>：侧边栏容器
+// <el-main>：主要区域容器
+// <el-footer>：底栏容器
 
-    props: {
-      direction: String
-    },
+// 3
+// 关系
+// <el-container> 和 <el-header> <el-aside> <el-main> <el-footer> 之间的关系
+// - 以上的组件采用了 flex 弹性布局，所以不要考虑浏览器是否支持flex
+// - <el-container> 的子元素 --> 只能是后四者
+// - 后四者的父元素 ------------> 也只能是 <el-container>
 
-    computed: {
-      isVertical() {
-        if (this.direction === 'vertical') {
-          return true;
-        } else if (this.direction === 'horizontal') {
-          return false;
-        }
-        return this.$slots && this.$slots.default
-          ? this.$slots.default.some(vnode => {
-            const tag = vnode.componentOptions && vnode.componentOptions.tag;
-            return tag === 'el-header' || tag === 'el-footer';
-          })
-          : false;
+// 4
+// <el-container> Container组件的属性
+// - direction
+//  - 表示：子元素的排列方向	string	horizontal / vertical
+//  - 默认值：子元素中有 el-header 或 el-footer 时为 vertical，否则为 horizontal
+
+// 5
+// <el-header>Header组件的属性 和 <el-footer>Footer组件的属性
+// - height
+//  - 表示：高度	string
+//  - 默认值：60px
+// - 思考
+// - 问题：为什么 Header 和 Footer 只有 height 属性，而没有 width 属性呢？
+// - 回答：
+//  - 因为Header和Footer只能在Container中
+//    - 如果没有Aside和Main，必然占据整行
+//    - 如果有Aside和Main并且没有其他Container也会上下排列还是占据整行
+//    - 如果有Aside和Main并且还有同层级的Container-中，那么Header和Footer在这个同层级的Container-B中也会占据这个container-B的整行
+//    - 所以无论上面三种情况的那种，Heder和Footer都会占据Container的一整行，所以不需要width设置
+
+
+// 6
+// <el-aside> Aside组件的属性
+// - width
+//  - 表示：侧边栏宽度	string
+//  - 默认值：300px
+
+// 7
+// 思考
+// 问题：为什么只有 Header Footer Aside 有属性，而 Main 没有属性呢？
+// 回答：因为设置了前三个后，最后一个 Main 就自定填充满剩余空间了
+
+export default {
+  name: "ElContainer",
+
+  componentName: "ElContainer",
+
+  props: {
+    direction: String,
+  },
+
+  computed: {
+    isVertical() { // 用来判断<el-container>的四种子组件的排列方式
+      if (this.direction === "vertical") { // Container组件只有一个属性 direction
+        return true;
+      } else if (this.direction === "horizontal") {
+        return false;
       }
-    }
-  };
+      // this.$slots.default ---> 这里需要注意，this.$slots.default 返回的是一个vnode数组 ，如果当 el-container 中有两个同级的元素或组件时，this.$slots.default返回的数组成员将有两个
+      return this.$slots && this.$slots.default
+        ? this.$slots.default.some((vnode) => {
+            const tag = vnode.componentOptions && vnode.componentOptions.tag;
+            return tag === "el-header" || tag === "el-footer";
+            // 这里表示，只要 <el-container> 的子组件 ( 注意是子组件，即第一层中的组件 ) 有 <el-header>或者<el-footer> 时就会垂直排列子组件
+          })
+        : false;
+    },
+  },
+};
 </script>
