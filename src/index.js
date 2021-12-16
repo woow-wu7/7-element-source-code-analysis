@@ -184,8 +184,6 @@ const install = function(Vue, opts = {}) {
 
   components.forEach(component => {
     Vue.component(component.name, component);
-    // 1. 这里在整个element的install中通过Vue.component注册了所有组件
-    // 2. 但是其实每个组件中也单独就行了Vue.component的注册，因为除了全局引用，我们还可以单独使用每个组件，单独手动引入某一个组件时，也是需要注册的
   });
 
   Vue.use(InfiniteScroll);
