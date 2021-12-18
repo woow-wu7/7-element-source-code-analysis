@@ -112,6 +112,7 @@
  -------------------------- */
 @mixin b($block) {
   $B: $namespace+'-'+$block !global;
+  // $B -> 定义了一个$B变量
 
   .#{$B} {
     // 这里其实就是引用了 $B 变量做为class名 ---> el-$block
