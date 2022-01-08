@@ -3,13 +3,23 @@
 /* BEM support Func
  -------------------------- */
 @function selectorToString($selector) {
+  // 1
+  // inspect
+  // - 返回一个字符串的表示形式，value 是一个 sass 表达式
+  // - https://www.runoob.com/sass/sass-introspection-func.html
+
+  // 2
+  // str-slice(string, start, end)
+  // - 从 string 中截取子字符串，通过 start-at 和 end-at 设置始末位置，未指定结束索引值则默认截取到字符串末尾
   $selector: inspect($selector);
   $selector: str-slice($selector, 2, -2);
   @return $selector;
 }
 
+// containsModifier 函数
+// - 作用是：判断是否包含 修饰符__
 @function containsModifier($selector) {
-  $selector: selectorToString($selector);
+  $selector: selectorToString($selector); // 将 $selector 转成字符串，在截取 2，-2 之间的字符串，比如 .el-badge
 
   @if str-index($selector, $modifier-separator) {
     @return true;
@@ -38,7 +48,12 @@
   }
 }
 
+
+
 @function hitAllSpecialNestRule($selector) {
 
   @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
+  // $modifier-separator: '--';
+  // $state-prefix: 'is-';
+  // :
 }

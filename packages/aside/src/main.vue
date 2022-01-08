@@ -10,6 +10,7 @@
 
     componentName: 'ElAside',
 
+    // el-aside 仅仅只有一个 width 属性，该属性赋值给了 style 属性
     props: {
       width: {
         type: String,

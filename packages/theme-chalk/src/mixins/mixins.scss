@@ -138,12 +138,41 @@
   $currentSelector: "";
   @each $unit in $element {
     $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
+    // $element-separator: '__';
+
+    // $B: $namespace+'-'+$block !global;
+    // $B -> 定义了一个$B变量
+    // 比如：在 badge 组件中 --------> B就表 el-badge
+
+    // 总体比如：在 badge 组件中 ----> $currentSelector 等于 .el-badge__content
   }
 
-  @if hitAllSpecialNestRule($selector) {
+  // @if
+  // 当 `@if` 的表达式返回值不是 `false` 或者 `null` 时，条件成立，输出 `{}` 内的代码
+  // ---
+  // $type: monster;
+  // p {
+  //   @if $type == ocean {
+  //     color: blue;
+  //   } @else if $type == matador {
+  //     color: red;
+  //   } @else if $type == monster {
+  //     color: green;
+  //   } @else {
+  //     color: black;
+  //   }
+  // }
+
+
+  // A
+  // @function hitAllSpecialNestRule($selector) {
+  //   @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
+  // }
+
+  @if hitAllSpecialNestRule($selector) { // $selector是&，以el-badge以例就是 .el-badge
     @at-root {
-      #{$selector} {
-        #{$currentSelector} {
+      #{$selector} { // .el-badge
+        #{$currentSelector} { // .el-badge__content
           @content;
         }
       }

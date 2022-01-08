@@ -21,15 +21,16 @@
 //  - <el-container> 是可以嵌套 <el-container> 的
 
 // 2
-// <el-header>：顶栏容器
-// <el-aside>：侧边栏容器
-// <el-main>：主要区域容器
-// <el-footer>：底栏容器
+// <el-container> ------------------- section 标签
+// <el-header>：顶栏容器 -------------- header 标签
+// <el-aside>：侧边栏容器 ------------- aside 标签
+// <el-main>：主要区域容器 ------------ main 标签 -> 1.main标签在整个布局中只有有唯一的一个，不能重复出现  2.<main> 元素不能是以下元素的后代：<article>、<aside>、<footer>、<header> 或 <nav>，即在该框架下main只能是section的后代
+// <el-footer>：底栏容器 ------------- footer标签
 
 // 3
 // 关系
 // <el-container> 和 <el-header> <el-aside> <el-main> <el-footer> 之间的关系
-// - 以上的组件采用了 flex 弹性布局，所以不要考虑浏览器是否支持flex
+// - 以上的组件采用了 flex 弹性布局，所以要考虑浏览器是否支持flex
 // - <el-container> 的子元素 --> 只能是后四者
 // - 后四者的父元素 ------------> 也只能是 <el-container>
 
@@ -52,6 +53,7 @@
 //    - 如果有Aside和Main并且没有其他Container也会上下排列还是占据整行
 //    - 如果有Aside和Main并且还有同层级的Container-中，那么Header和Footer在这个同层级的Container-B中也会占据这个container-B的整行
 //    - 所以无论上面三种情况的那种，Heder和Footer都会占据Container的一整行，所以不需要width设置
+//    - 并且只要有 Header 和 Footer 就是 vertical 垂直排列的，则会占据整行
 
 
 // 6
@@ -81,12 +83,15 @@ export default {
       } else if (this.direction === "horizontal") {
         return false;
       }
+
+      // 如果 direction 不存在，继续往下执行
       // this.$slots.default ---> 这里需要注意，this.$slots.default 返回的是一个vnode数组 ，如果当 el-container 中有两个同级的元素或组件时，this.$slots.default返回的数组成员将有两个
       return this.$slots && this.$slots.default
         ? this.$slots.default.some((vnode) => {
             const tag = vnode.componentOptions && vnode.componentOptions.tag;
             return tag === "el-header" || tag === "el-footer";
             // 这里表示，只要 <el-container> 的子组件 ( 注意是子组件，即第一层中的组件 ) 有 <el-header>或者<el-footer> 时就会垂直排列子组件
+            // vnode.componentOptions.tag -> 用来获取组件的名称
           })
         : false;
     },
