@@ -34,7 +34,7 @@ export default {
       type: String,
       default: 'start'
     },
-    align: Strin
+    align: String
   },
 
   computed: {
