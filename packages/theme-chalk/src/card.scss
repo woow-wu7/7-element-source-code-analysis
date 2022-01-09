@@ -1,9 +1,10 @@
 @import "mixins/mixins";
 @import "common/var";
 
+// .el-card
 @include b(card) {
-  border-radius: $--card-border-radius;
-  border: 1px solid $--card-border-color;
+  border-radius: $--card-border-radius; // 4px
+  border: 1px solid $--card-border-color; // #EBEEF5
   background-color: $--color-white;
   overflow: hidden;
   color: $--color-text-primary;
@@ -11,6 +12,7 @@
 
   @include when(always-shadow) {
     box-shadow: $--box-shadow-light;
+    // $--box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !default;
   }
 
   @include when(hover-shadow) {
@@ -20,13 +22,15 @@
     }
   }
 
+  // .el-card__header
   @include e(header) {
-    padding: #{$--card-padding - 2 $--card-padding};
-    border-bottom: 1px solid $--card-border-color;
+    padding: #{$--card-padding - 2 $--card-padding}; // 20px
+    border-bottom: 1px solid $--card-border-color; // #EBEEF5
     box-sizing: border-box;
   }
 
+  // .el-card__body
   @include e(body) {
-    padding: $--card-padding;
+    padding: $--card-padding; // 20px
   }
 }
