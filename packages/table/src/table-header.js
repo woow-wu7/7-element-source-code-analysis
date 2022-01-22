@@ -77,8 +77,8 @@ export default {
     return (
       <table
         class="el-table__header"
-        cellspacing="0"
-        cellpadding="0"
+        cellspacing="0" // 单元格之间的距离
+        cellpadding="0" // 单元格的padding
         border="0">
         <colgroup>
           {
