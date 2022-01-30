@@ -8,7 +8,8 @@ ElTable.install = function (Vue) {
 export default ElTable;
 
 // table
-// - thead tbody tfoot tr
+// - thead tbody tfoot tr th td
+// - caption
 // - colgroup
 // - 属性
 //    - border 边框
@@ -27,34 +28,44 @@ export default ElTable;
 //    - 只能在 <table> 元素之内，在任何一个 <caption> 元素之后，在任何一个 <thead>、<tbody>、<tfoot>、<tr> 元素之前使用 <colgroup> 标签
 //    - 如果想对 <colgroup> 中的某列定义不同的属性，请在 <colgroup> 标签内使用 <col> 标签
 
+// 2
+// caption
+// - 定义表格标题，必须紧随 table 标签之后。只能对每个表格定义一个标题，默认居中与表格之上
+// - caption 是标题的意思
+
+// 3
+// th td
+// - 属性
+//    - colspan 站的列数
+
+// 4
+// table的css相关
+// - border-collapse: collapse; // table的边框设置成单一的边框，不然有空隙
+// - table-layout: fixed; // 列宽由表格宽度和列宽度设定
+
+// 5
 // - 例子
 /*
-<table border="1" cellSpacing={10} cellPadding={10}>
+<table border="1"  cellSpacing="0" cellPadding="0">
+  <caption>表格标题</caption>
+  <colGroup width="100" span="2" style="background: yellow;"></colGroup>
+  <colGroup width="100" style="background: red;"></colGroup>
   <thead>
     <tr>
-      <th>Season</th>
-      <th>Goals</th>
-      <th>Assists</th>
+      <th colspan="2">姓名</th>
+      <th>年龄</th>
+      <th>城市</th>
+      <th>职业</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>2009-2010</th>
-      <td>25</td>
-      <td>43</td>
-    </tr>
-    <tr>
-      <th>2011-2012</th>
-      <td>40</td>
+      <th>woow_wu7</th>
       <td>20</td>
+      <td>重庆</td>
+      <td>engineer</td>
     </tr>
   </tbody>
-  <tfoot>
-    <tr>
-      <td>599</td>
-      <td>599</td>
-      <td>599</td>
-    </tr>
-  </tfoot>
-</table>;
+  <tfoot></tfoot>
+</table>
 */

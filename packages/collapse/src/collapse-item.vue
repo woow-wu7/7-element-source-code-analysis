@@ -71,8 +71,12 @@
       };
     },
 
-    inject: ['collapse'],
+    inject: ['collapse'], // 获取 provide 传递过来的值
 
+    // props
+    // - title 面板标题 string
+    // - name 唯一标志符 string/number
+    // - disabled 是否禁用 boolean
     props: {
       title: String,
       name: {
@@ -86,7 +90,7 @@
 
     computed: {
       isActive() {
-        return this.collapse.activeNames.indexOf(this.name) > -1;
+        return this.collapse.activeNames.indexOf(this.name) > -1; // 是否被点击过
       }
     },
 

@@ -4,29 +4,32 @@
 
 @include b(descriptions) {
   box-sizing: border-box;
-  font-size: $--font-size-base;
+  font-size: $--font-size-base; // $--font-size-base: 14px !default;
   color: $--color-text-primary;
 
+  // .el-descriptions__header
   @include e(header) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: $--descriptions-header-margin-bottom;
+    margin-bottom: $--descriptions-header-margin-bottom; // $--descriptions-header-margin-bottom: 20px !default;
 
+    // .el-descriptions__title
     @include e(title) {
       font-size: $--descriptions-title-font-size;
       font-weight: bold;
     }
   }
 
+  // .el-descriptions__body
   @include e(body) {
     color: $--color-text-regular;
     background-color: $--color-white;
 
     .el-descriptions__table {
-      border-collapse: collapse;
+      border-collapse: collapse; // table的边框设置成单一的边框，不然有空隙
       width: 100%;
-      table-layout: fixed;
+      table-layout: fixed; // 列宽由表格宽度和列宽度设定
 
       .el-descriptions-item__cell {
         box-sizing: border-box;

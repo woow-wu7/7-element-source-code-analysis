@@ -18,7 +18,7 @@
   }
 
   @include e(label) {
-    &.has-colon {
+    &.has-colon { // colon 用伪类实现
       &::after {
         content: ':';
         position: relative;

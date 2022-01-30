@@ -2,17 +2,22 @@
 @import "common/var";
 @import "common/transition";
 
+// .el-collapse
 @include b(collapse) {
   border-top: 1px solid $--collapse-border-color;
   border-bottom: 1px solid $--collapse-border-color;
 }
+
+// .el-collapse-item
 @include b(collapse-item) {
+  // .el-collapse-item.js-disabled
   @include when(disabled) {
     .el-collapse-item__header {
       color: $--font-color-disabled-base;
       cursor: not-allowed;
     }
   }
+  
   @include e(header) {
     display: flex;
     align-items: center;
