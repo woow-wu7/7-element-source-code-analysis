@@ -4,6 +4,7 @@
 - [x] el-badge
 - [x] el-card
 - [x] el-description
+- [x] el-divider
 
 
 
