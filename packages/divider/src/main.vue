@@ -64,6 +64,11 @@
 // data.staticStyle --------- 绑定内联样式
 // (4) component组件的引入
 // - 详见 https://segmentfault.com/a/1190000022937276
+
+// 4
+// 资料
+// - 源码分析：https://juejin.cn/post/6995183045212897311
+// - vue函数组件：https://segmentfault.com/a/1190000022937276
 export default {
   name: "ElDivider",
   props: {
