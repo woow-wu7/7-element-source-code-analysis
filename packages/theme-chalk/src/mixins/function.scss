@@ -11,8 +11,25 @@
   // 2
   // str-slice(string, start, end)
   // - 从 string 中截取子字符串，通过 start-at 和 end-at 设置始末位置，未指定结束索引值则默认截取到字符串末尾
-  $selector: inspect($selector);
-  $selector: str-slice($selector, 2, -2);
+
+  // 3
+  // Sass string 函数
+  // (1) quote
+  //  - 给字符串添加引号 quote(runoob) 转成 'runoob'
+  //  - 删除引号：unquote(string)
+  // (2) str-index(string, substring)
+  //  -  返回 substring 子字符串第一次在 string 中出现的位置。如果没有匹配到子字符串，则返回 null
+  // (3) str-insert(string, insert, index)
+  //  - 在字符串 string 中 index 位置插入 insert
+  // (4) str-length(string)
+  //  - 返回字符串的长度
+  // (5) str-slice(string, start, end)
+  // (6) to-lower-case(string)
+  // (7) to-upper-case(string)
+  // (8) unique-id()
+  // (9) unquote(string)
+  $selector: inspect($selector); // 转成字符串
+  $selector: str-slice($selector, 2, -2); // 截取字符串
   @return $selector;
 }
 
@@ -32,6 +49,8 @@
   $selector: selectorToString($selector);
 
   @if str-index($selector, '.' + $state-prefix) {
+    // str-index(string, subString) 	返回 substring 子字符串第一次在 string 中出现的位置。如果没有匹配到子字符串，则返回 null。
+    // $state-prefix: 'is-';
     @return true
   } @else {
     @return false
@@ -56,4 +75,8 @@
   // $modifier-separator: '--';
   // $state-prefix: 'is-';
   // :
+
+  // 是否包含 $modifier-separator: '--';
+  // 是否包含 $state-prefix: 'is-';
+  // 是否包含 :
 }

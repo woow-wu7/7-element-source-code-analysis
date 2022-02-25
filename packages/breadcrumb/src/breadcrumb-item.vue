@@ -11,6 +11,9 @@
   </span>
 </template>
 <script>
+  // ElBreadcrumbItem
+  // - to string/object
+  // - replace boolean
   export default {
     name: 'ElBreadcrumbItem',
     props: {
@@ -24,14 +27,14 @@
       };
     },
 
-    inject: ['elBreadcrumb'],
+    inject: ['elBreadcrumb'], // 注入父组件的实例
 
     mounted() {
-      this.separator = this.elBreadcrumb.separator;
-      this.separatorClass = this.elBreadcrumb.separatorClass;
-      const link = this.$refs.link;
+      this.separator = this.elBreadcrumb.separator; // 分隔符
+      this.separatorClass = this.elBreadcrumb.separatorClass; // 分隔符class
+      const link = this.$refs.link; // 获取 link dom
       link.setAttribute('role', 'link');
-      link.addEventListener('click', _ => {
+      link.addEventListener('click', _ => { // ElBreadcrumbItem 的 children 作为 slot
         const { to, $router } = this;
         if (!to || !$router) return;
         this.replace ? $router.replace(to) : $router.push(to);

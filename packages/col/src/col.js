@@ -4,10 +4,11 @@ export default {
   // props
 
   // span ------> 栅格占据的列数 --------> number --------> 默认值24
+  // tag -------> 自定义元素标签 -------> string --------> div
   // offset ----> 栅格 ( 左侧 ) 的间隔格数 -----> number --> 0
   // push ------> 栅格向右移动格数 -------> number --------> 0
   // pull ------> 栅格向左移动格数 -------> number --------> 0
-  // tag -------> 自定义元素标签 -------> string --------> div
+
   // xs ----> <768px 响应式栅格数或者栅格属性对象 --> number/object
   // sm ----> ≥768px
   // md ----> ≥992px
@@ -39,12 +40,13 @@ export default {
     gutter() {
       let parent = this.$parent; // vm.$parent 获取父组件
       while (parent && parent.$options.componentName !== 'ElRow') {
+        // while循环：一直遍历往上找，直到找到了 ELRow
         // 如果父组件上不包含componentName，就继续往上找，因为只有el-row组件的配置项上具有componentName属性
         // 浅层目的：这样做的目的是要让 el-col 和 el-row 来一一配对，向上寻找最近的 el-row 和 el-col 来配对
         // 更深的目的：就是为了获取最近父el-row组件上的 gutter 属性
         parent = parent.$parent;
       }
-      return parent ? parent.gutter : 0;
+      return parent ? parent.gutter : 0; // 找到 el-row 返回 gutter 属性，没找到返回0表示没找到
     }
   },
   render(h) {
@@ -65,7 +67,7 @@ export default {
       if (this[prop] || this[prop] === 0) { // 两个条件满足一个就可以
         classList.push(
           prop !== 'span'
-            ? `el-col-${prop}-${this[prop]}` // 非span
+            ? `el-col-${prop}-${this[prop]}` // 非span，比如：.el-col-offset-2
             : `el-col-${this[prop]}` // span
             // 这里需要注意，如果span不传值时，默认值是24，即 el-col-24
         );

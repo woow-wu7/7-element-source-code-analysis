@@ -2,11 +2,16 @@
 @import "mixins/utils";
 @import "common/var";
 
+// .el-breadcrumb
 @include b(breadcrumb) {
   font-size: 14px;
   line-height: 1;
-  @include utils-clearfix;
+  // ( line-height: 1 ) 相当于 (  line-height: 100% )，表示的是自身font-size的大小
+  // - 比如此时你设置了font-size：20px，之后你设置了line-height:1，转义过来的意思就是line-height:20px，行高为20px，这种定义样式的方法通常会用于iconfont的设置
+  // - https://juejin.cn/post/6971673576017494053
+  @include utils-clearfix; // 清除浮动
 
+  // .el-breadcrumb__separator
   @include e(separator) {
     margin: 0 9px;
     font-weight: bold;
