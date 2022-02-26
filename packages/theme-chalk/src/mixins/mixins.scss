@@ -147,11 +147,11 @@
 
     // $currentSelector + "." + $B + $element-separator + $unit + ","
     // 例子
-    // - .$B ----------------------- .breadcrumb
+    // - .$B ----------------------- .el-breadcrumb
     // - $element-separator -------- __
     // - $unit ------------------ separator
     // - 如果$element是list或者map时，有多个成员时， ',' 能分隔多个class，比如 .a, .b, .c {}
-    // - 总的 .breadcrumb__separator
+    // - 总的 .el-breadcrumb__separator
 
     // 总体比如：在 badge 组件中 ----> $currentSelector 等于 .el-badge__content
   }
@@ -180,9 +180,9 @@
 
   @if hitAllSpecialNestRule($selector) { // $selector是&，以el-badge以例就是 .el-badge
     @at-root {
-      #{$selector} { // .el-badge
-        #{$currentSelector} { // .el-badge__content
-          @content;
+      #{$selector} { // 父元素block -------------------- .el-badge .el-breadcrumb
+        #{$currentSelector} { // 当前元素element ------- .el-badge__content .el-breadcrumb__separator
+          @content; // 总体 --------------------------- .el-badge .el-badge__content {}    .el-breadcrumb .el-breadcrumb__separator
         }
       }
     }
