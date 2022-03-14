@@ -12,7 +12,7 @@
 
     props: {
       height: {
-        type: String,
+        type: String, // 和 header 的组件一样，只是class不一样
         default: '60px'
       }
     }

@@ -22,17 +22,17 @@
 
 // 2
 // <el-container> ------------------- section 标签
-// <el-header>：顶栏容器 -------------- header 标签
-// <el-aside>：侧边栏容器 ------------- aside 标签
-// <el-main>：主要区域容器 ------------ main 标签 -> 1.main标签在整个布局中只有有唯一的一个，不能重复出现  2.<main> 元素不能是以下元素的后代：<article>、<aside>、<footer>、<header> 或 <nav>，即在该框架下main只能是section的后代
-// <el-footer>：底栏容器 ------------- footer标签
+// <el-header>：顶栏容器 -------------- header 标签（ 高默认60px ）
+// <el-aside>：侧边栏容器 ------------- aside 标签 （ 宽默认300px ）
+// <el-main>：主要区域容器 ------------ main 标签 （ 撑满水平剩余空间 ）-> 1.main标签在整个布局中只有有唯一的一个，不能重复出现  2.<main> 元素不能是以下元素的后代：<article>、<aside>、<footer>、<header> 或 <nav>，即在该框架下main只能是section的后代
+// <el-footer>：底栏容器 ------------- footer标签 （ 高默认60px ）
 
 // 3
 // 关系
 // <el-container> 和 <el-header> <el-aside> <el-main> <el-footer> 之间的关系
 // - 以上的组件采用了 flex 弹性布局，所以要考虑浏览器是否支持flex
-// - <el-container> 的子元素 --> 只能是后四者
-// - 后四者的父元素 ------------> 也只能是 <el-container>
+// - 子元素：<el-container> 的子元素 --> 只能是后四者
+// - 父元素：后四者的父元素 ------------> 也只能是 <el-container>
 
 // 4
 // <el-container> Container组件的属性
@@ -73,19 +73,22 @@ export default {
   componentName: "ElContainer",
 
   props: {
-    direction: String,
+    direction: String, // container 只有一个属性, direction
   },
 
-  computed: {
+  computed: { // vertical 竖直的
     isVertical() { // 用来判断<el-container>的四种子组件的排列方式
+
+      // 1. direction 属性存在
       if (this.direction === "vertical") { // Container组件只有一个属性 direction
         return true;
       } else if (this.direction === "horizontal") {
         return false;
       }
 
-      // 如果 direction 不存在，继续往下执行
+      // 2 如果 direction 不存在，继续往下执行
       // this.$slots.default ---> 这里需要注意，this.$slots.default 返回的是一个vnode数组 ，如果当 el-container 中有两个同级的元素或组件时，this.$slots.default返回的数组成员将有两个
+      // - 当 direction 不存在，并且 el-header 或 el-footer 存在时，返回true，否则返回false
       return this.$slots && this.$slots.default
         ? this.$slots.default.some((vnode) => {
             const tag = vnode.componentOptions && vnode.componentOptions.tag;
