@@ -10,7 +10,7 @@ export default {
   mixins: [Popper],
 
   props: {
-    openDelay: {
+    openDelay: { // 延迟出现，单位毫秒
       type: Number,
       default: 0
     },
@@ -64,6 +64,7 @@ export default {
   },
   beforeCreate() {
     if (this.$isServer) return;
+    // vm.$isServer 用来判断是否是服务端
 
     this.popperVM = new Vue({
       data: { node: '' },

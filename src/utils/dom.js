@@ -7,6 +7,15 @@ const SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
 const MOZ_HACK_REGEXP = /^moz([A-Z])/;
 const ieVersion = isServer ? 0 : Number(document.documentMode);
 
+// 1
+// document.documentMode
+// - 作用：返回浏览器渲染文档的模式
+// - 返回值
+//  5 - 页面在 IE5 模式下展示
+//  7 - 页面在 IE7 模式下展示
+//  8 - 页面在 IE8 模式下展示
+//  9 - 页面在 IE9 模式下展示
+
 /* istanbul ignore next */
 const trim = function(string) {
   return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
@@ -117,6 +126,8 @@ export function removeClass(el, cls) {
 };
 
 /* istanbul ignore next */
+// getStyle
+// - 版本号小于 ie9，是第一个函数，否则第二个函数
 export const getStyle = ieVersion < 9 ? function(element, styleName) {
   if (isServer) return;
   if (!element || !styleName) return null;
@@ -138,7 +149,7 @@ export const getStyle = ieVersion < 9 ? function(element, styleName) {
   } catch (e) {
     return element.style[styleName];
   }
-} : function(element, styleName) {
+} : function(element, styleName) { // > ie9
   if (isServer) return;
   if (!element || !styleName) return null;
   styleName = camelCase(styleName);
@@ -146,8 +157,21 @@ export const getStyle = ieVersion < 9 ? function(element, styleName) {
     styleName = 'cssFloat';
   }
   try {
+    // 1
+    // document.defaultView
+    // - 在浏览器中，该属性返回当前 document 对象所关联的 window 对象，如果没有，会返回 null
+
+    // 2
+    // Window.getComputedStyle()
+    // - Window.getComputedStyle()方法返回一个对象
+    // - 该对象在应用活动样式表并解析这些值可能包含的任何基本计算后报告元素的所有CSS属性的值
+    // - 私有的CSS属性值可以通过对象提供的 ( API ) 或通过简单地使用 ( CSS属性名 ) 称进行索引来 ( 访问 )
+
+    // 3
+    // window.getComputedStyle(elem,null).getPropertyValue("height") -------------- api访问
+
     var computed = document.defaultView.getComputedStyle(element, '');
-    return element.style[styleName] || computed ? computed[styleName] : null;
+    return element.style[styleName] || computed ? computed[styleName] : null; // -- 属性名访问
   } catch (e) {
     return element.style[styleName];
   }
