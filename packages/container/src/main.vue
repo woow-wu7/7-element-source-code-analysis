@@ -67,7 +67,7 @@
 // 7
 // 思考
 // 问题：为什么只有 Header Footer Aside 有属性，而 Main 没有属性呢？
-// 回答：因为设置了前三个后，最后一个 Main 就自定填充满剩余空间了
+// 回答：因为 container 采用flex布局，设置了前三个后，最后一个 Main 就自定填充满剩余空间了
 
 export default {
   name: "ElContainer",
