@@ -81,15 +81,19 @@ export default {
   computed: { // vertical 竖直的
     isVertical() { // 用来判断<el-container>的四种子组件的排列方式
 
-      // 1. direction 属性存在
+      // 1
+      // - direction 属性存在
       if (this.direction === "vertical") { // Container组件只有一个属性 direction
         return true;
       } else if (this.direction === "horizontal") {
         return false;
       }
 
-      // 2 如果 direction 不存在，继续往下执行
-      // this.$slots.default ---> 这里需要注意，this.$slots.default 返回的是一个vnode数组 ，如果当 el-container 中有两个同级的元素或组件时，this.$slots.default返回的数组成员将有两个
+      // 2
+      // - 如果 direction 不存在，继续往下执行
+
+      // this.$slots.default
+      // - 注意：this.$slots.default 返回的是一个vnode数组 ，如果当 el-container 中有两个同级的元素或组件时，this.$slots.default返回的数组成员将有两个
       // - 当 direction 不存在，并且 el-header 或 el-footer 存在时，返回true，否则返回false
       return this.$slots && this.$slots.default
         ? this.$slots.default.some((vnode) => {
@@ -98,11 +102,14 @@ export default {
             // 这里表示，只要 <el-container> 的子组件 ( 注意是子组件，即第一层中的组件 ) 有 <el-header>或者<el-footer> 时就会垂直排列子组件
             // vnode.componentOptions.tag -> 用来获取组件的名称
 
-            // 扩展：获取 ( 组件名 ) 的方式有哪些？
+            // 扩展
+            // 获取 ( 组件名 ) 的方式有哪些？
             // - 1. vnode.componentOptions.Ctor.options.name
             // - 2. vnode.componentOptions.tag
             // - 3. 在组件中，通过 this.$options.name
-            // - 区别：componentOptions.tag 为模版或者render书写的标签字符串时，根据用户的书写可能不统一
+            // - 区别：
+            //  - componentOptions.tag 为模版或者render书写的标签字符串时，根据用户的书写可能不统一
+            //  - 所以推荐使用 vnode.componentOptions.Ctor.options.name
           })
         : false;
     },

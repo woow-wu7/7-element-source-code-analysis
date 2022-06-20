@@ -37,6 +37,11 @@
     mounted() {
       this.separator = this.elBreadcrumb.separator; // 分隔符
       this.separatorClass = this.elBreadcrumb.separatorClass; // 分隔符class
+      // 1
+      // separatorClass
+      // 其实是 iconFont 的 class
+      // 即 <i class="el-icon-edit"></i>
+
       const link = this.$refs.link; // 获取 link dom
       link.setAttribute('role', 'link');
       link.addEventListener('click', _ => { // ElBreadcrumbItem 的 children 作为 slot

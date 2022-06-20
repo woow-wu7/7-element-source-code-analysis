@@ -11,10 +11,12 @@
   // Breadcrumb
   // - separator ------------- 分隔符 string ‘/’
   // - separator-class ------- 图标分隔符class string
+  //   - 其实是：这里表示iconFont的名称
+  //   - 注意点：separator-class 存在时，separator 不生效
   // - 上面这两个属性都是给子组件 ElBreadcrumbItem 使用的
   // BreadcrumbItem
-  // - to -------------------- string/object
-  // - replace --------------- boolean
+  // - to -------------------- string/object，路由跳转对象，同 vue-router 的 to
+  // - replace --------------- boolean，在使用 to 进行路由跳转时，启用 replace 将不会向 history 添加新记录
 
   // 2
   // aria-label -------------- 当焦点落到该输入框时，读屏软件就会读出aria-label里的内容
@@ -62,7 +64,7 @@
 
     provide() {
       return {
-        elBreadcrumb: this // 向子组件注入实例
+        elBreadcrumb: this // 向子组件注入实例，即 <el-breadcrumb-item/>
       };
     },
 
@@ -72,5 +74,13 @@
         items[items.length - 1].setAttribute('aria-current', 'page'); // 从后往前给元素添加属性
       }
     }
+
+    // 扩展
+    // - NodeList
+    //  - 静态集合
+    //  - querySelectorAll()
+    // - HTMLCollection
+    //  - 动态集合
+    //  - getElementsByTagName()
   };
 </script>
