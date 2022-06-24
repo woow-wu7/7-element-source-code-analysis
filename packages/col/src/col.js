@@ -61,7 +61,7 @@ export default {
     // - el-col：上的 style 的 marginLeft 和 marginRight 分别是 ( 正的gutter的一半 )
     // - el-row：上的 style 的 marginLeft 和 marginRight 分别是 ( 负的gutter的一半 )
     // 所以
-    // - 在el-row的最左边和右边相互抵消了，el-row的两边就没有间距，贴合el-row的外层容器
+    // - 在el-row的最左边和最右边和el-col相互抵消了，el-row的两边就没有间距，贴合el-row的外层容器
 
     // this.gutter 是父组件 el-row 传入的 gutter
     if (this.gutter) {
