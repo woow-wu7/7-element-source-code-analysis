@@ -16,9 +16,15 @@ export default {
   componentName: 'ElRow',
   // componentName
   // - 解释：componentName 是 element-ui 自己定义的属性
-  // - 作用：componentName 是为了在 el-col 中获取到 el-row，因为el-row在嵌套的情况下，需要寻找最新的el-row来配对
+  // - 作用：
+  //  - componentName 是为了在 el-col 中获取到 el-row，因为el-row在嵌套的情况下，需要寻找最近的el-row来配对
+  //  - 在 el-col 通过  while (parent && parent.$options.componentName !== 'ElRow') {  parent = parent.$parent; } 的方式不断往上寻找最近的 el-row
+  // - 扩展：
+  //  - vue2 ---> 所以在自定义 options 时，通过 vm.$options 来获取很方便
+  //  - vue3 ---> 通过 getCurrentInstance() 获取当前组件实例；即 getCurrentInstance().$options
 
   props: {
+    // el-row 一共有 5 个属性
     // tag ------ 自定义元素标签 string
     // gutter --- 栅格间隔 number 0
 
@@ -28,6 +34,9 @@ export default {
     tag: {
       type: String,
       default: 'div'
+      // 因为：这里可以设置 自定义的标签
+      // 所以：el-row 组件使用了 render函数的方式，而不是 template
+      // 好处：render 不会在像 template 那样做很多的的 if 判断来做不同类型的tag标签的渲染
     },
     gutter: Number,
     type: String, // 当值是 'flex' 字符串时，表示flex布局方式
@@ -44,7 +53,7 @@ export default {
 
       if (this.gutter) {
         ret.marginLeft = `-${this.gutter / 2}px`; // gutter 变化时从新计算 style
-        ret.marginRight = ret.marginLeft; // marginLeft 和 marginRight 值相等
+        ret.marginRight = ret.marginLeft; // marginLeft 和 marginRight 值相等，都是 gutter 的负一半
       }
 
       return ret;
@@ -54,6 +63,11 @@ export default {
   // 1
   // render()
   // - render函数签名：(createElement: () => VNode) => VNode
+  // - 具体的流程：
+  //  - 1. el和template会被编译成render函数 ( template -> AST -> optimize(静态节点) -> generate )
+  //  - 2. render函数执行返回一个 vnode
+  //  - 3. 执行 vm.$update 进行 path，path过程中会进行 diff 算法比对
+  //  - 总结：el或template --> AST+optimize+generate --> render() --> createElement生成vnode --> vm.$update --> path --> diff --> 生成真实的DOM
 
   // 2
   // createElement()
@@ -68,7 +82,7 @@ export default {
   //      - function 是resolve了string或function的async函数
   //    - 第二个参数 ( 可选 )
   //      - {Object}
-  //      - 一个与模板中 attribute 对应的数据对象。可选。
+  //      - 数据对象：一个与模板中 attribute 对应的数据对象。可选。
   //      - 第二个参数其实就是数据对象，官网链接  https://cn.vuejs.org/v2/guide/render-function.html#createElement-%E5%8F%82%E6%95%B0
   //      - 从官网中我们需要学习到
   //        - 1. render和template相比的好处
@@ -110,7 +124,10 @@ export default {
         this.align ? `is-align-${this.align}` : '',
         { 'el-row--flex': this.type === 'flex' }
       ],
-      style: this.style // 计算属性，设置了 marginLeft和marginRight
-    }, this.$slots.default); // 第三个参数：表示通过 createElement创建的子节点，单个时string，多个时array
+      style: this.style
+      // 计算属性，设置了 marginLeft和marginRight
+    }, this.$slots.default);
+    // this.$slots.default)
+    // - 第三个参数：表示通过 createElement创建的子节点，单个时string，多个时array
   }
 };

@@ -3,8 +3,9 @@ export default {
 
   // props
 
-  // span ------> 栅格占据的列数 --------> number --------> 默认值24
   // tag -------> 自定义元素标签 -------> string --------> div
+  // span ------> 栅格占据的列数 --------> number --------> 默认值24
+
   // offset ----> 栅格 ( 左侧 ) 的间隔格数 -----> number --> 0
   // push ------> 栅格向右移动格数 -------> number --------> 0
   // pull ------> 栅格向左移动格数 -------> number --------> 0
@@ -40,9 +41,9 @@ export default {
     gutter() {
       let parent = this.$parent; // vm.$parent 获取父组件
       while (parent && parent.$options.componentName !== 'ElRow') {
-        // while循环：一直遍历往上找，直到找到了 ELRow
+        // while循环：一直遍历往上找，直到找到了 el-row
         // 如果父组件上不包含componentName，就继续往上找，因为只有el-row组件的配置项上具有componentName属性
-        // 浅层目的：这样做的目的是要让 el-col 和 el-row 来一一配对，向上寻找最近的 el-row 和 el-col 来配对
+        // 浅层目的：这样做的目的是要让相邻最近的 el-col 和 el-row 来一一配对，向上寻找最近的 el-row 和 el-col 来配对
         // 更深的目的：就是为了获取最近父el-row组件上的 gutter 属性
         parent = parent.$parent;
       }
@@ -55,9 +56,14 @@ export default {
     // style对象中的属性最终会作为el-row的style属性传入
     // - paddingLeft = gutter的一半
     // - paddingRight = gutter的一半
-    // ---> 而el-row上的style中有 marginLeft和marginRight 分别是 ( 负的gutter的一半 )
-    // ---> 在el-row的最左边和左右边所以相互抵消了
 
+    // 因为
+    // - el-col：上的 style 的 marginLeft 和 marginRight 分别是 ( 正的gutter的一半 )
+    // - el-row：上的 style 的 marginLeft 和 marginRight 分别是 ( 负的gutter的一半 )
+    // 所以
+    // - 在el-row的最左边和右边相互抵消了，el-row的两边就没有间距，贴合el-row的外层容器
+
+    // this.gutter 是父组件 el-row 传入的 gutter
     if (this.gutter) {
       style.paddingLeft = this.gutter / 2 + 'px';
       style.paddingRight = style.paddingLeft;
@@ -78,6 +84,8 @@ export default {
     // 为object时 { span:4, offset:4，... } 这样的格式
     ['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
       if (typeof this[size] === 'number') { // number
+        // eg  ->  this['xs'] 即为 props中的 xs
+        // eg  ->  el-col-xs-900
         classList.push(`el-col-${size}-${this[size]}`);
       } else if (typeof this[size] === 'object') { // object
         let props = this[size];
