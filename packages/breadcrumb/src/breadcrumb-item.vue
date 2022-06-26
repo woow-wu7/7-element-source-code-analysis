@@ -17,8 +17,12 @@
 </template>
 <script>
   // ElBreadcrumbItem
+
+  // 1
+  // props
   // - to string/object
   // - replace boolean
+
   export default {
     name: 'ElBreadcrumbItem',
     props: {
@@ -32,12 +36,23 @@
       };
     },
 
-    inject: ['elBreadcrumb'], // 注入父组件的实例
+    inject: ['elBreadcrumb'],
+
+    // 2
+    // inject
+    // 注入父组件的实例
+    // provide() {
+    //   return {
+    //     elBreadcrumb: this // 向子组件注入实例，即 <el-breadcrumb-item/>
+    //   };
+    // }
+
 
     mounted() {
       this.separator = this.elBreadcrumb.separator; // 分隔符
       this.separatorClass = this.elBreadcrumb.separatorClass; // 分隔符class
-      // 1
+
+      // 3
       // separatorClass
       // 其实是 iconFont 的 class
       // 即 <i class="el-icon-edit"></i>
@@ -45,6 +60,8 @@
       const link = this.$refs.link; // 获取 link dom
       link.setAttribute('role', 'link');
       link.addEventListener('click', _ => { // ElBreadcrumbItem 的 children 作为 slot
+
+        // to 是 props 中传入的
         const { to, $router } = this;
         if (!to || !$router) return;
         this.replace ? $router.replace(to) : $router.push(to); // push or replace
