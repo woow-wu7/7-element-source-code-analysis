@@ -56,6 +56,7 @@ export default {
   watch: {
     active(newVal, oldVal) {
       this.$emit('change', newVal, oldVal);
+      // watch 当 active 发生变化时，触发 change 事件
     },
 
     steps(steps) {

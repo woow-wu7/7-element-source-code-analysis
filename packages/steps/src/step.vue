@@ -172,7 +172,11 @@ export default {
 
   mounted() {
     const unwatch = this.$watch('index', val => {
+
       this.$watch('$parent.active', this.updateStatus, { immediate: true });
+      // 1. 在子组件中监听 - steps中的 active 的变化
+      // 2. 父组件steps中的active变化后，更新 本组件step的状态
+
       this.$watch('$parent.processStatus', () => {
         const activeIndex = this.$parent.active;
         this.updateStatus(activeIndex);

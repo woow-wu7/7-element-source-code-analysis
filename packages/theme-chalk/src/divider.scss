@@ -6,7 +6,7 @@
   background-color: $--border-color-base;
   position: relative;
 
-  //.el-divider--vertical 横向
+  //.el-divider--horizontal 横向
   @include m(horizontal) {
     display: block;
     height: 1px;

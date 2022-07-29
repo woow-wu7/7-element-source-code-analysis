@@ -35,16 +35,15 @@
  -------------------------- */
 @mixin res($key, $map: $--breakpoints) {
   // 循环断点Map，如果存在则返回
-  @if map-has-key($map, $key) { // 如果map存在该key
+  @if map-has-key($map, $key) {
+    // 如果map存在该key
     // 'sm-only' 这些only是用来判断是否隐藏用的
-    @if $key=='sm-only'or $key=='md-only'or $key=='lg-only' {
+    @if $key== "sm-only" or $key== "md-only" or $key== "lg-only" {
       // 判定特定定义处理字符串参数值问题
       @media only screen and #{unquote(map-get($map, $key))} {
         @content;
       }
-    }
-
-    @else {
+    } @else {
       @media only screen and #{inspect(map-get($map, $key))} {
         @content;
         // 表示：通过 map-get($map, $key) 获取 $--breakpoints map中的某个属性对应的值，并使用inspect转成字符串，并使用插值 #{} 获取其中的变量字符串
@@ -52,7 +51,8 @@
         // 比如：@media only screen and (min-width: 768px) {}
       }
     }
-  } @else { // 如果map中不存在key
+  } @else {
+    // 如果map中不存在key
     @warn "Undefeined points: `#{$map}`";
   }
 }
@@ -96,24 +96,23 @@
  -------------------------- */
 @mixin placeholder {
   &::-webkit-input-placeholder {
-    @content
+    @content;
   }
 
   &::-moz-placeholder {
-    @content
+    @content;
   }
 
   &:-ms-input-placeholder {
-    @content
+    @content;
   }
 }
 
 /* BEM
  -------------------------- */
 @mixin b($block) {
-  $B: $namespace+'-'+$block !global;
-  // $B -> 定义了一个$B变量
-  // 比如：
+  $B: $namespace + "-" + $block !global;
+  // $B -> 定义了一个$B变量，是局部变量，同时也是一个全局变量
 
   .#{$B} {
     // 这里其实就是引用了 $B 变量做为class名 ---> el-$block
@@ -126,11 +125,27 @@
 
   // !global
   // - 表示变量提升，将局部变量提升为全局变量，在其他函数体内也能访问到此变量
+  // $var: red;
+  // @mixin foo($var: $var) {
+  //   default-color: $var;
+  //   $var: green !global; // 局部变量，变量$var被设为green；在局部作用域中，$var都会被设为green
+  //   scoped-color: $var; // 注意：上面修改的是全局变量，而这里是局部变量未被修改，所以是 red
+  // }
+  // .bar {
+  //   @include foo($var);
+  //   color: $var; // 这里 color 引用的是 全局变量 $var，全局变量$var被修改成了 green
+  // }
+  // 被编译为 .bar {
+  //   default-color: red;
+  //   scoped-color: red;
+  //   color: green; // color 是全局变量
+  // }
 
   // @content 是 @include 花括号中的值
 
   // #{$B} 是插值语句
-  // - 插值语句可以在 选择器 或者 属性名 中使用 变量
+  // - 插值语句可以在 ( 选择器 ) 或者 ( 属性名 ) 中使用 ( 变量 )
+  // - 插值语句用在 ( 属性值 ) 中也是可以的
 }
 
 @mixin e($element) {
@@ -138,7 +153,12 @@
   $selector: &;
   $currentSelector: "";
   @each $unit in $element {
-    $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
+    $currentSelector: #{$currentSelector +
+      "." +
+      $B +
+      $element-separator +
+      $unit +
+      ","};
     // $element-separator: '__';
 
     // $B: $namespace+'-'+$block !global; 是一个 block
@@ -172,16 +192,18 @@
   //   }
   // }
 
-
   // A
   // @function hitAllSpecialNestRule($selector) {
   //   @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
   // }
 
-  @if hitAllSpecialNestRule($selector) { // $selector是&，以el-badge以例就是 .el-badge
+  @if hitAllSpecialNestRule($selector) {
+    // $selector是&，以el-badge以例就是 .el-badge
     @at-root {
-      #{$selector} { // 父元素block -------------------- .el-badge .el-breadcrumb
-        #{$currentSelector} { // 当前元素element ------- .el-badge__content .el-breadcrumb__separator
+      #{$selector} {
+        // 父元素block -------------------- .el-badge .el-breadcrumb
+        #{$currentSelector} {
+          // 当前元素element ------- .el-badge__content .el-breadcrumb__separator
           @content; // 总体 --------------------------- .el-badge .el-badge__content {}    .el-breadcrumb .el-breadcrumb__separator
         }
       }
@@ -195,26 +217,33 @@
   }
 }
 
+
+// M
 @mixin m($modifier) {
   $selector: &; // 这里变量没有使用到 ？
   $currentSelector: "";
   @each $unit in $modifier {
-    $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
+    $currentSelector: #{$currentSelector +
+      & +
+      $modifier-separator +
+      $unit +
+      ","};
   }
   // $modifier-separator: '--';
   // $namespace: 'el';
   // $element-separator: '__';
   // $state-prefix: 'is-';
-  // & 指代父元素 .el-row
+  // & 指代父元素，比如 .el-row
   // --------
   // (1) 当 ( &是row ) 并且 当传入的 ( $modifier是flex ) 时
   // 遍历完：$currentSelector ------> &--flex ------> .el-row--flex
+  // (2) 当 ( &是divider ) 并且 当传入的 ( $modifier是horizontal ) 时
+  // 遍历完：$currentSelector ------> &--horizontal ------> .el-divider--horizontal
 
   // $currentSelector变量的初始值 ‘’ -> 会在循环中被覆盖掉
   // - 例如
   //  - $currentSelector: "";
   //  - $currentSelector: .el-row-flex
-
 
   // @each
   // 格式为 @each var in <list>|<map>
@@ -244,7 +273,6 @@
   //   font-size: 1.5em; }
   // h3 {
   //   font-size: 1.2em; }
-
 
   // @at-root
   // - 表示提升到父元素的同一层级 ( !!!! 这里一定要注意如果是多层的 @at-root 是提升到最外层的父元素同级，而不是最近的父级，即【样式文件的根层级】 !!!! )
@@ -299,7 +327,8 @@
   // - 始终是把 @at-root 的 class 放在样式文件的 ( 根层级上 )，不管 @at-root在多深的层次
   // 记忆
   // - at-root 从名字就能知道是在文件的根层级
-  @at-root { // 这里表示提升到和 b 同级别
+  @at-root {
+    // 这里表示提升到和 b 同级别
     #{$currentSelector} {
       @content;
     }
@@ -308,7 +337,7 @@
 
 @mixin configurable-m($modifier, $E-flag: false) {
   $selector: &;
-  $interpolation: '';
+  $interpolation: "";
 
   @if $E-flag {
     $interpolation: $element-separator + $E-flag;
@@ -316,30 +345,38 @@
 
   @at-root {
     #{$selector} {
-      .#{$B+$interpolation+$modifier-separator+$modifier} {
+      .#{$B + $interpolation + $modifier-separator + $modifier} {
         @content;
       }
     }
   }
 }
 
-@mixin spec-selector($specSelector: '', $element: $E, $modifier: false, $block: $B) {
-  $modifierCombo: '';
+@mixin spec-selector(
+  $specSelector: "",
+  $element: $E,
+  $modifier: false,
+  $block: $B
+) {
+  $modifierCombo: "";
 
   @if $modifier {
     $modifierCombo: $modifier-separator + $modifier;
   }
 
   @at-root {
-    #{&}#{$specSelector}.#{$block+$element-separator+$element+$modifierCombo} {
-      @content
+    #{&}#{$specSelector}.#{$block
+      + $element-separator
+      + $element
+      + $modifierCombo} {
+      @content;
     }
   }
 }
 
 @mixin meb($modifier: false, $element: $E, $block: $B) {
   $selector: &;
-  $modifierCombo: '';
+  $modifierCombo: "";
 
   @if $modifier {
     $modifierCombo: $modifier-separator + $modifier;
@@ -347,13 +384,12 @@
 
   @at-root {
     #{$selector} {
-      .#{$block+$element-separator+$element+$modifierCombo} {
-        @content
+      .#{$block + $element-separator + $element + $modifierCombo} {
+        @content;
       }
     }
   }
 }
-
 
 @mixin when($state) {
   @at-root {
@@ -377,22 +413,20 @@
   // .el-row--flex .is-justify-center: {  justify-content: center; }
 }
 
-
 @mixin extend-rule($name) {
-  @extend #{'%shared-'+$name};
+  @extend #{"%shared-" + $name};
 }
 
 @mixin share-rule($name) {
-  $rule-name: '%shared-'+$name;
+  $rule-name: "%shared-" + $name;
 
   @at-root #{$rule-name} {
-    @content
+    @content;
   }
 }
 
 @mixin pseudo($pseudo) {
-  @at-root #{&}#{':#{$pseudo}'} {
-    @content
+  @at-root #{&}#{":#{$pseudo}"} {
+    @content;
   }
 }
-
