@@ -85,15 +85,18 @@ export default {
     ['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
       if (typeof this[size] === 'number') { // number
         // eg  ->  this['xs'] 即为 props中的 xs
-        // eg  ->  el-col-xs-900
+        // eg  ->  el-col-xs-9
+
+        // 如果是number，则表示珊格数量
+        // 如果是object，是类似这样一个对象  {span: 4, offset: 4}，该对象的key，key只能是 span，offset, push, pull
         classList.push(`el-col-${size}-${this[size]}`);
       } else if (typeof this[size] === 'object') { // object
         let props = this[size];
         Object.keys(props).forEach(prop => { // 遍历该对象的key，key只能是 span，offset, push, pull
           classList.push(
             prop !== 'span'
-              ? `el-col-${size}-${prop}-${props[prop]}` // 非span
-              : `el-col-${size}-${props[prop]}` // span，即 遍历响应类型 + 响应类型对应的object中的每个值
+              ? `el-col-${size}-${prop}-${props[prop]}` // 非span，eg -> el-col-offset-2
+              : `el-col-${size}-${props[prop]}` // span，即 遍历响应类型 + 响应类型对应的object中的每个值l，eg -> el-col-span-2
           );
         });
       }
