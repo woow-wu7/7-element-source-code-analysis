@@ -83,7 +83,7 @@ export default {
     },
     handleClick(e) {
       this.scrollToTop();
-      this.$emit('click', e);
+      this.$emit('click', e); // 点击按钮后，暴露给外部的事件
     },
     scrollToTop() {
       const el = this.el;
