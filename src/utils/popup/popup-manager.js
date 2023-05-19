@@ -50,6 +50,8 @@ const PopupManager = {
     }
   },
 
+  // 1. 当 message 挂载后，会执行 instance.$el.style.zIndex = PopupManager.nextZIndex();
+  // 2. zIndex 变化又回触发 Object.defineProperty(PopupManager, 'zIndex', {})
   nextZIndex: function() {
     return PopupManager.zIndex++;
   },
@@ -151,6 +153,8 @@ const PopupManager = {
   }
 };
 
+// 1. 当 PopupManager.zIndex 变化时，即当 message 挂载后，会执行 instance.$el.style.zIndex = PopupManager.nextZIndex();
+// 2. zIndex 变化又回触发 Object.defineProperty(PopupManager, 'zIndex', {})
 Object.defineProperty(PopupManager, 'zIndex', {
   configurable: true,
   get() {

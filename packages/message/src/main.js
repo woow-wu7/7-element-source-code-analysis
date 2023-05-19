@@ -71,7 +71,30 @@ const Message = function (options) {
   });
   instance.verticalOffset = verticalOffset;
   instance.visible = true;
+
+  // 层级
+  // 1
+  // nextZIndex: function() {
+  //   return PopupManager.zIndex++;
+  // }
+  // 2
+  // 当 PopupManager.zIndex++ 变化时，会出发下面的函数
+  // Object.defineProperty(PopupManager, 'zIndex', {
+  //   configurable: true,
+  //   get() {
+  //     if (!hasInitZIndex) {
+  //       zIndex = zIndex || (Vue.prototype.$ELEMENT || {}).zIndex || 2000;
+  //       hasInitZIndex = true;
+  //     }
+  //     return zIndex;
+  //   },
+  //   set(value) {
+  //     zIndex = value;
+  //   }
+  // });
+
   instance.$el.style.zIndex = PopupManager.nextZIndex();
+
   instances.push(instance); // 每次调用都会生成一个实例，向队列中添加
 
   // 返回 vm 实例
