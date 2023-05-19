@@ -118,6 +118,11 @@
     // 这里其实就是引用了 $B 变量做为class名 ---> el-$block
     // 比如 el-row -----> .#{$B} -> .el-row
     @content;
+    // @mixin @include @content
+    // @mixin 和 @include 和 @content
+    // - @mixin aa -----> 定义一个混合器aa
+    // - @include aa ---> 使用混合器aa
+    // - @content; ------> 将 @include aa 中定义的样式引入到 @mixin 中
   }
   // $B
   // 1. 这里的 $namespace = el
@@ -141,24 +146,32 @@
   //   color: green; // color 是全局变量
   // }
 
-  // @content 是 @include 花括号中的值
+  // @content
+  // - 是 @include 花括号中的值
 
-  // #{$B} 是插值语句
+  // #{$B}
+  // - 是插值语句
   // - 插值语句可以在 ( 选择器 ) 或者 ( 属性名 ) 中使用 ( 变量 )
-  // - 插值语句用在 ( 属性值 ) 中也是可以的
+  // - 插值语句用在 ( 属性值 ) 中也是可以的 // 插值语句也可以在 ( 属性值 ) 中插入SassScript
+  // 例子
+  // $name: foo;
+  // $attr: border;
+  // p.#{$name} { // -------------- #{} 插值语句在 ( 选择器 ) 中使用
+  //   #{$attr}-color: blue; // --  #{} 插值语句在 ( 属性名 ) 中使用
+  // }
+  // 编译为
+  // p.foo {
+  //   border-color: blue;
+  // }
 }
 
+// E
 @mixin e($element) {
   $E: $element !global;
   $selector: &;
   $currentSelector: "";
   @each $unit in $element {
-    $currentSelector: #{$currentSelector +
-      "." +
-      $B +
-      $element-separator +
-      $unit +
-      ","};
+    $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
     // $element-separator: '__';
 
     // $B: $namespace+'-'+$block !global; 是一个 block
@@ -217,21 +230,16 @@
   }
 }
 
-
 // M
 @mixin m($modifier) {
   $selector: &; // 这里变量没有使用到 ？
   $currentSelector: "";
   @each $unit in $modifier {
-    $currentSelector: #{$currentSelector +
-      & +
-      $modifier-separator +
-      $unit +
-      ","};
+    $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
   }
   // $modifier-separator: '--';
-  // $namespace: 'el';
   // $element-separator: '__';
+  // $namespace: 'el';
   // $state-prefix: 'is-';
   // & 指代父元素，比如 .el-row
   // --------
@@ -352,12 +360,7 @@
   }
 }
 
-@mixin spec-selector(
-  $specSelector: "",
-  $element: $E,
-  $modifier: false,
-  $block: $B
-) {
+@mixin spec-selector($specSelector: "", $element: $E, $modifier: false, $block: $B) {
   $modifierCombo: "";
 
   @if $modifier {
@@ -365,10 +368,7 @@
   }
 
   @at-root {
-    #{&}#{$specSelector}.#{$block
-      + $element-separator
-      + $element
-      + $modifierCombo} {
+    #{&}#{$specSelector}.#{$block + $element-separator + $element + $modifierCombo} {
       @content;
     }
   }
@@ -391,6 +391,7 @@
   }
 }
 
+// when
 @mixin when($state) {
   @at-root {
     &.#{$state-prefix + $state} {

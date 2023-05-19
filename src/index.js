@@ -200,7 +200,7 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$confirm = MessageBox.confirm;
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
-  Vue.prototype.$message = Message;
+  Vue.prototype.$message = Message; // 将 Message 函数挂载到 Vue 的原型链上
 
 };
 
