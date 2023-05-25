@@ -9,6 +9,7 @@
 - [x] el-breadcrumb el-breadcrumb-item
 - [x] el-message
 - [x] el-empty
+- [x] el-timeline el-timeline-item
 
 # (二) 源码分析
 
