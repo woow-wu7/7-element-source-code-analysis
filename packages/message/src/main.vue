@@ -55,9 +55,11 @@ export default {
       type: "info", // success/warning/info/error
       iconClass: "", // 自定义图标的类名，会覆盖 type
       customClass: "",
+
       onClose: null,
       showClose: false,
       closed: false,
+
       verticalOffset: 20,
       timer: null,
       dangerouslyUseHTMLString: false,
@@ -73,7 +75,7 @@ export default {
     },
     positionStyle() {
       return {
-        top: `${this.verticalOffset}px`,
+        top: `${this.verticalOffset}px`, // 采用 fixed 定位，通过 top 来调整多个 Message 的位置
       };
     },
   },
@@ -101,10 +103,12 @@ export default {
       this.$el.parentNode.removeChild(this.$el);
     },
 
+    // close
+    // - 是用户点击 x 按钮触发的事件
     close() {
-      this.closed = true; // close=true, this.visible一定是false
+      this.closed = true; // close=true, this.visible一定是false；closed被watch了 
       if (typeof this.onClose === "function") {
-        this.onClose(this); // 执行 传入 的，点击关闭按钮时的 回调
+        this.onClose(this); // 执行 用户传入 的，点击关闭按钮时的 回调
       }
     },
 
