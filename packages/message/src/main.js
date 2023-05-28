@@ -4,6 +4,12 @@ import { PopupManager } from "element-ui/src/utils/popup";
 import { isVNode } from "element-ui/src/utils/vdom";
 import { isObject } from "element-ui/src/utils/types";
 
+// element-ui message 源码分析
+// - https://github.com/woow-wu7/7-element-source-code-analysis/blob/main/packages/message/src/main.js
+
+// divine-ui message 源码
+// - https://github.com/woow-wu7/8-divine-plus/blob/main/packages/components/message/message.ts
+
 // Vue.extend
 // - 作用: 使用基础 Vue 构造器，创建一个“子类”
 // - 参数: 参数是一个包含组件选项的对象
