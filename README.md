@@ -10,6 +10,7 @@
 - [x] el-message
 - [x] el-empty
 - [x] el-timeline el-timeline-item
+- [x] el-loading
 
 # (二) 源码分析
 
