@@ -163,7 +163,7 @@ export const getStyle = ieVersion < 9 ? function(element, styleName) {
 
     // 2
     // Window.getComputedStyle()
-    // - Window.getComputedStyle()方法返回一个对象
+    // - Window.getComputedStyle()方法 - 获取指定元素的 CSS 样式
     // - 该对象在应用活动样式表并解析这些值可能包含的任何基本计算后报告元素的所有CSS属性的值
     // - 私有的CSS属性值可以通过对象提供的 ( API ) 或通过简单地使用 ( CSS属性名 ) 称进行索引来 ( 访问 )
 
