@@ -49,20 +49,26 @@ export default {
       let value = this.accordion ? activeNames[0] : activeNames;
       this.activeNames = activeNames;
       this.$emit("input", value);
-      this.$emit("change", value);
+      this.$emit("change", value); // 兼容 v-model
     },
+    // handleItemClick
+    // - 参数: item 表示 collapse-item 组件实例
     handleItemClick(item) {
-      if (this.accordion) { //----------------- 手风琴
+      if (this.accordion) {
+        //----------------- 手风琴
         this.setActiveNames(
           (this.activeNames[0] || this.activeNames[0] === 0) &&
             this.activeNames[0] === item.name
             ? ""
             : item.name
         );
-      } else { // ----------------------------- 非手风琴
+      } else {
+        // ----------------------------- 非手风琴
         let activeNames = this.activeNames.slice(0); // 浅拷贝
         let index = activeNames.indexOf(item.name); // 点击哪个item
 
+        // 在数组则已经是展开状态，则删除，使起收缩
+        // 不在数组中，添加
         if (index > -1) {
           activeNames.splice(index, 1); // 删除
         } else {

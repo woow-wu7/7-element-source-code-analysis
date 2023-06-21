@@ -1,10 +1,12 @@
 import { addClass, removeClass } from 'element-ui/src/utils/dom';
 
 class Transition {
+  // 相当于 v-enter-from
   beforeEnter(el) {
     addClass(el, 'collapse-transition');
     if (!el.dataset) el.dataset = {};
 
+    // 定义DOM的自定义属性
     el.dataset.oldPaddingTop = el.style.paddingTop;
     el.dataset.oldPaddingBottom = el.style.paddingBottom;
 
@@ -13,6 +15,7 @@ class Transition {
     el.style.paddingBottom = 0;
   }
 
+  // 相当于 v-enter-active
   enter(el) {
     el.dataset.oldOverflow = el.style.overflow;
     if (el.scrollHeight !== 0) {
@@ -28,6 +31,7 @@ class Transition {
     el.style.overflow = 'hidden';
   }
 
+  // 相当于 v-enter-to
   afterEnter(el) {
     // for safari: remove class then reset height is necessary
     removeClass(el, 'collapse-transition');
@@ -72,6 +76,6 @@ export default {
       on: new Transition()
     };
 
-    return h('transition', data, children);
+    return h('transition', data, children); // 内置组件 <transition/>
   }
 };

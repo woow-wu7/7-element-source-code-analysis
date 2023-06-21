@@ -11,6 +11,7 @@
 - [x] el-empty
 - [x] el-timeline el-timeline-item
 - [x] el-loading
+- [x] el-collapse
 
 # (二) 源码分析
 
