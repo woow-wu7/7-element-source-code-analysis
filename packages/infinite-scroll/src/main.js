@@ -109,6 +109,7 @@ const handleScroll = function (cb) {
   let shouldTrigger = false;
 
   // 指令所在元素 === 具有滚动条的元素
+  // 1. el=== container触底判断
   if (container === el) {
     // be aware of difference between clientHeight & offsetHeight & window.getComputedStyle().height
 
@@ -117,6 +118,9 @@ const handleScroll = function (cb) {
     shouldTrigger = container.scrollHeight - scrollBottom <= distance;
   }
   // 指令所在元素 !== 具有滚动条的元素
+  // 2. el !== container 时的触底判断，即 el 是 container 的子元素，container可以滚动
+  // - el 在 container 是否已经触底的公式
+  //  - el.offsetHeight + el.top - container.top - container.offsetHeight - container.borderBottom因为包含border
   else {
     const heightBelowTop =
       getOffsetHeight(el) + getElementTop(el) - getElementTop(container);
@@ -183,7 +187,7 @@ export default {
     if (container) {
       container.addEventListener("scroll", onScroll); // 添加 scroll 事件
 
-      // immediate 
+      // immediate
       // - 是否立即执行加载方法，以防初始状态下内容无法撑满容器。
       if (immediate) {
         const observer = (el[scope].observer = new MutationObserver(onScroll));
