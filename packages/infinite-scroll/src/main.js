@@ -176,7 +176,7 @@ export default {
     const vm = vnode.context;
     // only include vertical scroll
     const container = getScrollContainer(el, true); // 获取具有滚动条的元素
-    const { delay, immediate } = getScrollOptions(el, vm); // 获取传入组件的属性的值
+    const { delay, immediate } = getScrollOptions(el, vm); // 获取传入组件的属性的值 // delay 和 immediate 属性一般不会变化，所以可以在 mounted 时获取
     const onScroll = throttle(delay, handleScroll.bind(el, cb));
 
     // const scope = "ElInfiniteScroll";
