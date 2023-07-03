@@ -9,7 +9,7 @@
     },
 
     props: {
-      type: String,
+      type: String, // card/border-card
       activeName: String,
       closable: Boolean,
       addable: Boolean,

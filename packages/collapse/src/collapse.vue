@@ -55,7 +55,7 @@ export default {
     // - 参数: item 表示 collapse-item 组件实例
     handleItemClick(item) {
       if (this.accordion) {
-        //----------------- 手风琴
+        //------------------------ 手风琴
         this.setActiveNames(
           (this.activeNames[0] || this.activeNames[0] === 0) &&
             this.activeNames[0] === item.name
@@ -63,7 +63,7 @@ export default {
             : item.name
         );
       } else {
-        // ----------------------------- 非手风琴
+        // ------------------------ 非手风琴
         let activeNames = this.activeNames.slice(0); // 浅拷贝
         let index = activeNames.indexOf(item.name); // 点击哪个item
 

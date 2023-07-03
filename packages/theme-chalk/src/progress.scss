@@ -7,7 +7,7 @@
   line-height: 1;
 
   @include e(text) {
-    font-size:14px;
+    font-size: 14px;
     color: $--color-text-regular;
     display: inline-block;
     vertical-align: middle;
@@ -20,7 +20,7 @@
     }
   }
 
-  @include m((circle,dashboard)) {
+  @include m((circle, dashboard)) {
     display: inline-block;
 
     .el-progress__text {
@@ -39,10 +39,9 @@
     }
   }
 
-
   @include m(without-text) {
     .el-progress__text {
-      display: none;
+      display: none; // 无文字
     }
 
     .el-progress-bar {
@@ -52,6 +51,7 @@
     }
   }
 
+  // 文字在图形内，不需要右边距
   @include m(text-inside) {
     .el-progress-bar {
       padding-right: 0;
@@ -90,6 +90,7 @@
   }
 }
 
+// line
 @include b(progress-bar) {
   padding-right: 50px;
   display: inline-block;
@@ -98,6 +99,9 @@
   margin-right: -55px;
   box-sizing: border-box;
 
+  // $--border-color-lighter: #EBEEF5 !default;
+  // 进度条背景
+  // strokeWidth 作用在这里
   @include e(outer) {
     height: 6px;
     border-radius: 100px;
@@ -110,7 +114,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
+    height: 100%; // 充满outer
     background-color: $--color-primary;
     text-align: right;
     border-radius: 100px;
@@ -121,6 +125,7 @@
     @include utils-vertical-center;
   }
 
+  // 文字在图形内
   @include e(innerText) {
     display: inline-block;
     vertical-align: middle;

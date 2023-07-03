@@ -8,17 +8,20 @@
 @mixin utils-clearfix {
   $selector: &;
 
-  @at-root { // @at-root 提升层级，表示和el-row等同一个层级，而不是子级
+  // @at-root 提升到scss文件的根层级，比如: el-row.scss 文件的根层级，即和 el-row 同一个层级，而不是子级
+  @at-root {
     #{$selector}::before,
     #{$selector}::after {
       display: table; // display：block；也可以
       content: ""; // 不占大小
     }
     #{$selector}::after {
-      clear: both // 清除浮动
+      clear: both; // 清除浮动
     }
   }
 }
+
+// 文字垂直居中
 
 @mixin utils-vertical-center {
   $selector: &;
@@ -28,7 +31,7 @@
       display: inline-block;
       content: "";
       height: 100%;
-      vertical-align: middle
+      vertical-align: middle;
     }
   }
 }

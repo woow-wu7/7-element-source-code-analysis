@@ -10,6 +10,8 @@
       :aria-controls="`el-collapse-content-${id}`"
       :aria-describedby="`el-collapse-content-${id}`"
     >
+      <!-- focus blur 事件 和 tabindex 的关系 -->
+      <!-- div要使用focus事件，需要设置tabindex属性 -->
       <div
         class="el-collapse-item__header"
         @click="handleHeaderClick"
@@ -58,7 +60,7 @@ export default {
 
   componentName: "ElCollapseItem",
 
-  mixins: [Emitter],
+  mixins: [Emitter], // 混入 dispatch  broadcast
 
   components: { ElCollapseTransition },
 
@@ -110,6 +112,7 @@ export default {
   },
 
   methods: {
+    // 3 focus 事件
     handleFocus() {
       setTimeout(() => {
         if (!this.isClick) {
@@ -119,12 +122,14 @@ export default {
         }
       }, 50);
     },
+    // 1. click事件
     handleHeaderClick() {
       if (this.disabled) return;
       this.dispatch("ElCollapse", "item-click", this); // 执行 ElCollapse 组件的 item-click 事件，参数是vm实例
       this.focusing = false;
-      this.isClick = true;
+      this.isClick = true; // 已点击
     },
+    // 2. 回车键-键盘事件
     handleEnterClick() {
       this.dispatch("ElCollapse", "item-click", this);
     },

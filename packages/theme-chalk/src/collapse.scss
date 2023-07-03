@@ -39,6 +39,7 @@
         transform: rotate(90deg);
       }
     }
+    // focus(不是hover)时，颜色为蓝色
     &.focusing:focus:not(:hover){
       color: $--color-primary;
     }
