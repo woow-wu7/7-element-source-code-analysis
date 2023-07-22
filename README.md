@@ -13,6 +13,8 @@
 - [x] el-loading
 - [x] el-collapse
 - [x] el-InfiniteScroll 指令
+- [x] el-icon
+- [x] el-rate
 
 # (二) 源码分析
 
