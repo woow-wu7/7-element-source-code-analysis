@@ -18,9 +18,16 @@
 
   @include e(label) {
     transition: .2s;
-    height: $--switch-height;
+
+    height: $--switch-height; 
+    // $--switch-height: 20px !default;
+
     display: inline-block;
-    font-size: $--switch-font-size;
+
+    font-size: $--switch-font-size; 
+    // $--switch-font-size: $--font-size-base !default;
+    // $--font-size-base: 14px !default;
+
     font-weight: 500;
     cursor: pointer;
     vertical-align: middle;
@@ -44,6 +51,7 @@
   }
 
   @include e(input) {
+    // hide
     position: absolute;
     width: 0;
     height: 0;
